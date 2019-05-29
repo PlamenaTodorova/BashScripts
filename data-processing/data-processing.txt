@@ -1,0 +1,49 @@
+Стъпки при написването на домашната работа:
+ * Проверка дали подадените на скрипта файлове реално съществуват и изписване на съответното съобщение за грешка в случай, че липсват
+ * Създаване на целевата директория в случай, че тя не съществува вече
+ * Проверка на съдържанието на променливата EEG_TZ и сетването и на UTF, ако има нужда
+ * Извличане на данните от egg файла и конвентирането им в удобен формат
+	-изчисляване на времената за край и начало на eeg файла
+ * Проверка дали в лог файла се съдържат логове с повтарящи се имена
+ * Вземане на крайната стойност на beep стимула за начало на звуковия файл
+ * Инсталиране на ffmpeg
+ * Използване на ffprobe за да се вземе дължината на подадения звуков файл и изчисляването на края на звуковия файл
+	- ffprobe -v quiet -show_entries format=duration -of default=noprint_wrappers=1:nokey=1
+		+ -v quiet - за да подтисне всичкия изход освен онези entries, които смецифично искаме в show_entries
+		+ -show_entries format=duration - задаваме, че искаме само стойността на duration
+		+ -of - форматира изхода
+		+ noprint_wrappers=1 - премахва [FORMAT] тага
+		+ nokey=1 - премахва името на duration оставяйки само стойността му
+ * Отделяне на всички стимули освен beep и завъртането им в цикъл
+	- проверка дали стимула е достатъчно дълъг
+	- проверка дали стимула е бил засечен от еег-то
+	- проверка дали резултата от стимула е записан в звуковия файл
+	- създаване на файловете и запълването им
+	- ffmpeg -ss ${fromPosition} -to ${toPossition} -i ${input} ${output} &>/dev/null
+		+ -ss - от тази позиция във файла
+		+ -to - до тази позиция във файла
+		+ &>/dev/null - пренасочване на изхода, за да не се трупа на екрана
+
+Използвани ресурси при решаване на домашната работа:
+ * https://unix.stackexchange.com/questions/184863/what-is-the-meaning-of-ifs-n-in-bash-scripting
+	- как да променя IFS(Internal Field Separator), за да мога да чета по редове вместо само по полета
+
+ * https://www.computerhope.com/unix/ubc.htm
+ * https://stackoverflow.com/questions/20558710/bc-truncate-floating-point-number
+	- как се смятат изрази с float числа в shell
+	- как се използа командата bc
+	- как се закръгля надолу в bc
+
+ * https://unix.stackexchange.com/questions/32119/using-regex-inside-if-clause-in-bash
+
+ * https://www.oreilly.com/library/view/bash-cookbook/0596526784/ch11s04.html
+	- Как се използва командата date за преминаване към и от epoch time към нормално време
+
+ * http://www.pixelbeat.org/docs/linux_timezones/
+	- Как се борави с timezones и как се използва променливата TZ
+
+ * https://ffmpeg.org/	
+ * https://superuser.com/questions/650291/how-to-get-video-duration-in-seconds
+
+
+
